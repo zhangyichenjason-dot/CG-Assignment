@@ -1,0 +1,61 @@
+﻿cbuffer staticMeshBuffer : register(b0)
+{
+    
+    float4x4 VP;
+    float time;
+    float windStrength;
+    float windSpeed;
+    float padding;
+};
+
+struct VS_INPUT
+{
+    
+    float3 pos : POSITION;
+    float3 normal : NORMAL;
+    float3 tangent : TANGENT;
+    float2 TexCoords : TEXCOORD;
+
+   
+    float4x4 instanceWorld : WORLD; 
+    uint instanceID : SV_InstanceID; 
+};
+
+struct VS_OUTPUT
+{
+    float4 pos : SV_POSITION;
+    float3 normal : NORMAL;
+    float3 tangent : TANGENT;
+    float2 TexCoords : TEXCOORD;
+};
+
+VS_OUTPUT VS(VS_INPUT input)
+{
+    VS_OUTPUT output;
+    
+    
+    float4x4 W = input.instanceWorld; 
+
+    float3 worldPos = mul(float4(input.pos, 1.0f), W).xyz;
+    
+    
+    float heightFactor = 1.0f - input.TexCoords.y;
+    // 使用世界坐标产生不同相位
+    float phase = worldPos.x * 0.2f + worldPos.z * 0.15f;
+    
+    float windOffset = sin(time * windSpeed + phase) * windStrength * heightFactor;
+    windOffset += sin(time * windSpeed * 0.7f + phase * 0.5f) * windStrength * 0.2f * heightFactor;
+
+    worldPos.x += windOffset;
+    worldPos.z += windOffset * 0.3f;
+
+    // 最终位置
+    output.pos = mul(float4(worldPos, 1.0f), VP);
+    
+    // 法线变换
+    output.normal = normalize(mul(float4(input.normal, 0.0f), W).xyz);
+    output.tangent = normalize(mul(float4(input.tangent, 0.0f), W).xyz);
+    output.TexCoords = input.TexCoords;
+    
+    return output;
+}

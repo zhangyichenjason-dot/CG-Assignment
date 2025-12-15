@@ -1,0 +1,25 @@
+cbuffer materialBuffer : register(b0)
+{
+    float4 params;
+};
+
+Texture2D diffuseTexture : register(t0);
+SamplerState samplerState : register(s0);
+
+struct PS_INPUT
+{
+    float4 pos : SV_POSITION;
+    float3 normal : NORMAL;
+    float3 tangent : TANGENT;
+    float2 TexCoords : TEXCOORD;
+};
+
+float4 PS(PS_INPUT input) : SV_TARGET
+{
+    float4 color = diffuseTexture.Sample(samplerState, input.TexCoords);
+    
+    float3 lightDir = normalize(float3(1, 1, 1));
+    float diffuse = max(dot(normalize(input.normal), lightDir), 0.2);
+    
+    return color * diffuse;
+}

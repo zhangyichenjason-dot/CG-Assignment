@@ -1,0 +1,49 @@
+﻿cbuffer LightBuffer : register(b0)
+{
+    float3 lightDirection;
+    float lightIntensity;
+    float3 lightColor;
+    float ambientStrength;
+};
+
+Texture2D diffuseTexture : register(t0);
+SamplerState samplerState : register(s0);
+
+struct PS_INPUT
+{
+    float4 pos : SV_POSITION;
+    float3 normal : NORMAL;
+    float3 tangent : TANGENT;
+    float2 TexCoords : TEXCOORD;
+};
+
+float4 PS(PS_INPUT input) : SV_TARGET
+{
+    // 采样纹理（白色草贴图 + Alpha通道）
+    float4 texColor = diffuseTexture.Sample(samplerState, input.TexCoords);
+
+    // Alpha 测试：丢弃透明像素
+    clip(texColor.a - 0.5f);//提高 Alpha 测试阈值，消除交叉处的黑线
+
+    // 染色：将白色纹理染成绿色
+    // RGB(76, 153, 0) 转换为：•	R: 76 / 255 = 0.298，•	G: 153 / 255 = 0.600 •	B: 0 / 255 = 0.0
+    // RGB(178,225,102) 转换为：•	R: 178 / 255 = 0.698，•	G: 225 / 255 = 0.882 •	B: 102 / 255 = 0.4
+    float3 grassTint = float3(0.698f, 0.882f, 0.4f); 
+    texColor.rgb = texColor.rgb * grassTint;
+
+    // 法线归一化
+    float3 normal = normalize(input.normal);
+    
+    // 环境光
+    float3 ambient = ambientStrength * lightColor;
+    
+    // 漫反射光照（双面光照：使用 abs 让背面也能接收光照）
+    float diff = abs(dot(normal, lightDirection));
+    float3 diffuse = diff * lightColor * lightIntensity;
+    
+    // 最终颜色
+    float3 result = (ambient + diffuse) * texColor.rgb;
+    
+    return float4(result, texColor.a);
+}
+

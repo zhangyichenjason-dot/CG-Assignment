@@ -1,0 +1,38 @@
+﻿cbuffer LightBuffer : register(b0)
+{
+    float3 lightDirection;  // 指向光源的方向
+    float lightIntensity;
+    float3 lightColor;
+    float ambientStrength;
+};
+
+Texture2D diffuseTexture : register(t0);
+SamplerState samplerState : register(s0);
+
+struct PS_INPUT
+{
+    float4 pos : SV_POSITION;
+    float3 normal : NORMAL;
+    float3 tangent : TANGENT;
+    float2 TexCoords : TEXCOORD;
+};
+
+float4 PS(PS_INPUT input) : SV_TARGET
+{
+    float4 texColor = diffuseTexture.Sample(samplerState, input.TexCoords);
+    
+    // 法线归一化
+    float3 normal = normalize(input.normal);
+    
+    // 环境光
+    float3 ambient = ambientStrength * lightColor;
+    
+    // 漫反射光照
+    float diff = max(dot(normal, lightDirection), 0.0);
+    float3 diffuse = diff * lightColor * lightIntensity;
+    
+    // 最终颜色
+    float3 result = (ambient + diffuse) * texColor.rgb;
+    
+    return float4(result, texColor.a);
+}

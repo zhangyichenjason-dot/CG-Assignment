@@ -1,0 +1,30 @@
+﻿cbuffer staticMeshBuffer : register(b0)
+{
+    float4x4 W;
+    float4x4 VP;
+};
+
+struct VSInput
+{
+    float3 pos    : POSITION;
+    float3 normal : NORMAL;
+    float3 tangent: TANGENT;
+    float2 uv     : TEXCOORD0;
+};
+
+struct VSOutput
+{
+    float4 posH : SV_POSITION;
+    float2 uv   : TEXCOORD0;
+};
+
+VSOutput VS(VSInput vin)
+{
+    VSOutput vout;
+
+    float4 worldPos = mul(float4(vin.pos, 1.0f), W);
+    vout.posH       = mul(worldPos, VP);
+    vout.uv         = vin.uv;
+
+    return vout;
+}

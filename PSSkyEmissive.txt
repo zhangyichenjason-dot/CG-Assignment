@@ -1,0 +1,26 @@
+﻿Texture2D    diffuseTex : register(t0);
+SamplerState samp       : register(s0);
+
+cbuffer SkyboxBuffer : register(b0)
+{
+    float emissiveIntensity;
+    float3 padding;
+};
+
+struct PSInput
+{
+    float4 posH : SV_POSITION;
+    float2 uv   : TEXCOORD0;
+};
+
+float4 PS(PSInput pin) : SV_TARGET
+{
+    // 读取完整的纹理颜色（包含 Alpha 通道）
+    float4 texColor = diffuseTex.Sample(samp, pin.uv);
+    
+    // 只对 RGB 应用自发光强度
+    float3 finalColor = texColor.rgb * emissiveIntensity;
+
+    // 返回纹理原本的 Alpha 值，而不是强制 1.0f
+    return float4(finalColor, texColor.a);
+}

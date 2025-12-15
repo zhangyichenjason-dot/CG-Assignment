@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="Animation.h">
+      <Filter>PipelineHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Core.h">
+      <Filter>PipelineHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="GEMLoader.h">
+      <Filter>PipelineHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>PipelineHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Maths.h">
+      <Filter>PipelineHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>PipelineHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="PSO.h">
+      <Filter>PipelineHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders.h">
+      <Filter>PipelineHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>PipelineHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>PipelineHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>PipelineHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>PipelineHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Environment.h">
+      <Filter>ObjectHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>ObjectHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>ObjectHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerController.h">
+      <Filter>GameController</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMechine.h">
+      <Filter>GameController</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio.h">
+      <Filter>GameController</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Core.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CppProperties.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="PSGrass.txt">
+      <Filter>shaders</Filter>
+    </Text>
+    <Text Include="PSLit.txt">
+      <Filter>shaders</Filter>
+    </Text>
+    <Text Include="PSLitUnTextured.txt">
+      <Filter>shaders</Filter>
+    </Text>
+    <Text Include="PSSkyEmissive.txt">
+      <Filter>shaders</Filter>
+    </Text>
+    <Text Include="PStextured.txt">
+      <Filter>shaders</Filter>
+    </Text>
+    <Text Include="PSUntextured.txt">
+      <Filter>shaders</Filter>
+    </Text>
+    <Text Include="VS.txt">
+      <Filter>shaders</Filter>
+    </Text>
+    <Text Include="VSAnim.txt">
+      <Filter>shaders</Filter>
+    </Text>
+    <Text Include="VSGrass.txt">
+      <Filter>shaders</Filter>
+    </Text>
+    <Text Include="VSSkyEmissive.txt">
+      <Filter>shaders</Filter>
+    </Text>
+    <Text Include="level.txt">
+      <Filter>ObjectHeader</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{b32e9c7c-32d1-4b3a-bf8e-60fb34bb45e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PipelineHeader">
+      <UniqueIdentifier>{a1e061c8-758f-408f-8d42-48d018f1c7aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ObjectHeader">
+      <UniqueIdentifier>{aff29007-6b15-4dc2-97d1-f141c77f83b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameController">
+      <UniqueIdentifier>{3d54c302-2fee-47ae-abfa-b994f03f025b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
